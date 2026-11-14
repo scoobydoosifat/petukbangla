@@ -31,7 +31,7 @@ export default function Home() {
       <div className="path-grid">
         <Link to="/food-map" className="path-card map-card"><span className="path-number">01</span><div className="card-icon"><Sparkles /></div><h3>Food Map</h3><p>সাইন ইন ছাড়াই জেলার খাবার বেছে নিজের রঙিন স্বাদের মানচিত্র PNG হিসেবে নামিয়ে নিন।</p><b>মানচিত্র খুলুন <ArrowRight /></b><span className="bangla-stamp">সবার জন্য</span></Link>
         <Link to="/explore" className="path-card explore-card"><span className="path-number">02</span><div className="card-icon"><MapPinned /></div><h3>Food Exploration</h3><p>ঢাকার মানচিত্রে মানুষের খুঁজে পাওয়া খাবারের পিন দেখুন, নিজের আবিষ্কার যোগ করুন।</p><b>স্বাদ খুঁজুন <ArrowRight /></b><span className="bangla-stamp">সাইন ইন</span></Link>
-        <Link to="/register" className="path-card join-card"><span className="path-number">03</span><div className="card-icon"><Logo compact /></div><h3>Join the Adda</h3><p>নাম আর ইমেইল দিয়ে ছোট্ট অ্যাকাউন্ট। কোনো ইমেইল ভেরিফিকেশন, পেমেন্ট বা ঝামেলা নেই।</p><b>অ্যাকাউন্ট খুলুন <ArrowRight /></b><span className="bangla-stamp">ফ্রি</span></Link>
+        <Link to="/register" className="path-card join-card"><span className="path-number">03</span><div className="card-icon"><Logo compact /></div><h3>Join the Adda</h3><p>ভেরিফাইড ইমেইল, নাম আর পাসওয়ার্ড দিয়ে ছোট্ট অ্যাকাউন্ট বানিয়ে এখনই যোগ দিন।</p><b>অ্যাকাউন্ট খুলুন <ArrowRight /></b><span className="bangla-stamp">ফ্রি</span></Link>
       </div>
     </section>
 
