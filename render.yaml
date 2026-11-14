@@ -15,6 +15,12 @@ services:
         generateValue: true
       - key: FRONTEND_URL
         sync: false
+      - key: BREVO_API_KEY
+        sync: false
+      - key: BREVO_SENDER_EMAIL
+        value: celastialorion@gmail.com
+      - key: BREVO_SENDER_NAME
+        value: petukbangla
       - key: ADMIN_NAME
         value: Petuk Bangla Admin
       - key: ADMIN_EMAIL

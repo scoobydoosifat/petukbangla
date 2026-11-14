@@ -13,6 +13,12 @@ public class User {
     private String name;
     @Indexed(unique = true) private String email;
     private String passwordHash;
+    /** Null is treated as verified for users created before email verification was introduced. */
+    private Boolean emailVerified;
+    @Indexed private String emailVerificationTokenHash;
+    private Instant emailVerificationExpiresAt;
+    @Indexed private String passwordResetTokenHash;
+    private Instant passwordResetExpiresAt;
     @Builder.Default private Role role = Role.USER;
     @Builder.Default private Instant createdAt = Instant.now();
 }

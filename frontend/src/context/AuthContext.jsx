@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('petuk-token'); localStorage.removeItem('petuk-user'); setUser(null); setChecking(false);
   };
 
-  const value = useMemo(() => ({ user, checking, login: async (data) => accept(await api.login(data)), register: async (data) => accept(await api.register(data)), logout }), [user, checking]);
+  const value = useMemo(() => ({ user, checking, login: async (data) => accept(await api.login(data)), register: async (data) => api.register(data), logout }), [user, checking]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

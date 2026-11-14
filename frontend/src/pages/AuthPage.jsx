@@ -10,14 +10,23 @@ export default function AuthPage({ mode }) {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
   const { user, login, register } = useAuth();
   const navigate = useNavigate(); const location = useLocation();
   const explorationRequired = location.state?.from === '/explore';
   if (user) return <Navigate to="/explore" replace />;
   const submit = async (event) => {
     event.preventDefault(); if (loading) return; setLoading(true); setError('');
-    try { registerMode ? await register(form) : await login({ email: form.email, password: form.password }); navigate(location.state?.from || '/explore'); }
+    try {
+      if (registerMode) {
+        const result = await register(form);
+        setNotice(result.message);
+      } else {
+        await login({ email: form.email, password: form.password });
+        navigate(location.state?.from || '/explore');
+      }
+    }
     catch (exception) { setError(exception.message); } finally { setLoading(false); }
   };
-  return <section className="auth-page"><div className="auth-art"><Logo /><div><p>“খাবারের সবচেয়ে সুন্দর ঠিকানা<br />মানুষের স্মৃতিতে।”</p><span>— পেটুক বাংলার আড্ডা</span></div><div className="auth-sun" /></div><form className="auth-form" onSubmit={submit}>{explorationRequired && !registerMode && <div className="auth-required">Food Exploration ব্যবহার করতে আপনাকে সাইন ইন করতে হবে।</div>}<p className="eyebrow">{registerMode ? 'নতুন পেটুক' : 'আবার স্বাগতম'}</p><h1>{registerMode ? 'আড্ডায় যোগ দিন' : 'আপনার অ্যাকাউন্টে'}</h1><p>{registerMode ? 'কোনো ইমেইল ভেরিফিকেশন নেই—নাম, ইমেইল আর পাসওয়ার্ডই যথেষ্ট।' : 'ঢাকার খাবার মানচিত্রে নিজের আবিষ্কার যোগ করতে সাইন ইন করুন।'}</p>{error && <div className="form-error">{error}</div>}{registerMode && <label><span><UserRound size={17} /> নাম</span><input required minLength="2" maxLength="60" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></label>}<label><span><Mail size={17} /> ইমেইল</span><input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></label><label><span><KeyRound size={17} /> পাসওয়ার্ড</span><input type="password" required minLength="8" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} /><small>কমপক্ষে ৮ অক্ষর</small></label><LoadingButton loading={loading} className="button button-red full" type="submit">{registerMode ? 'অ্যাকাউন্ট খুলুন' : 'সাইন ইন করুন'}</LoadingButton><p className="auth-switch">{registerMode ? 'আগেই অ্যাকাউন্ট আছে?' : 'এখনও অ্যাকাউন্ট নেই?'} <Link to={registerMode ? '/login' : '/register'}>{registerMode ? 'সাইন ইন' : 'ফ্রি অ্যাকাউন্ট'}</Link></p><Link className="map-without-login" to="/food-map">Food Map খুলুন →</Link></form></section>;
+  return <section className="auth-page"><div className="auth-art"><Logo /><div><p>“খাবারের সবচেয়ে সুন্দর ঠিকানা<br />মানুষের স্মৃতিতে।”</p><span>— পেটুক বাংলার আড্ডা</span></div><div className="auth-sun" /></div><form className="auth-form" onSubmit={submit}>{explorationRequired && !registerMode && <div className="auth-required">Food Exploration ব্যবহার করতে আপনাকে সাইন ইন করতে হবে।</div>}<p className="eyebrow">{registerMode ? 'নতুন পেটুক' : 'আবার স্বাগতম'}</p><h1>{registerMode ? 'আড্ডায় যোগ দিন' : 'আপনার অ্যাকাউন্টে'}</h1><p>{registerMode ? 'অ্যাকাউন্ট খুলতে আপনার ইমেইল নিশ্চিত করতে হবে।' : 'ঢাকার খাবার মানচিত্রে নিজের আবিষ্কার যোগ করতে সাইন ইন করুন।'}</p>{error && <div className="form-error">{error}</div>}{notice && <div className="auth-notice">{notice}</div>}{!notice && <>{registerMode && <label><span><UserRound size={17} /> নাম</span><input required minLength="2" maxLength="60" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></label>}<label><span><Mail size={17} /> ইমেইল</span><input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></label><label><span><KeyRound size={17} /> পাসওয়ার্ড</span><input type="password" required minLength="8" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} /><small>কমপক্ষে ৮ অক্ষর</small></label><LoadingButton loading={loading} className="button button-red full" type="submit">{registerMode ? 'অ্যাকাউন্ট খুলুন' : 'সাইন ইন করুন'}</LoadingButton></>}{!registerMode && <Link className="auth-inline-link" to="/forgot-password">পাসওয়ার্ড ভুলে গেছেন?</Link>}<p className="auth-switch">{registerMode ? 'আগেই অ্যাকাউন্ট আছে?' : 'এখনও অ্যাকাউন্ট নেই?'} <Link to={registerMode ? '/login' : '/register'}>{registerMode ? 'সাইন ইন' : 'ফ্রি অ্যাকাউন্ট'}</Link></p><Link className="map-without-login" to="/food-map">Food Map খুলুন →</Link></form></section>;
 }
