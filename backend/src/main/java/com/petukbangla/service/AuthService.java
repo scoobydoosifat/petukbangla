@@ -41,7 +41,7 @@ public class AuthService {
         user.setEmailVerificationExpiresAt(Instant.now().plus(Duration.ofHours(24)));
         users.save(user);
         emailService.sendVerification(user.getEmail(), user.getName(), rawToken);
-        return new RegistrationResponse("Check your email to confirm your Petuk Bangla account.");
+        return new RegistrationResponse("সাইন ইন করার আগে আপনার ইমেইল নিশ্চিত করুন। ইমেইল ইনবক্স অথবা স্প্যাম ইনবক্স চেক করুন।");
     }
 
     public AuthResponse login(LoginRequest request) {
@@ -50,7 +50,7 @@ public class AuthService {
             passwords.matches(request.password(), dummyHash);
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Invalid email or password.");
         }
-        if (Boolean.FALSE.equals(user.getEmailVerified())) throw new ApiException(HttpStatus.FORBIDDEN, "Please confirm your email before signing in.");
+        if (Boolean.FALSE.equals(user.getEmailVerified())) throw new ApiException(HttpStatus.FORBIDDEN, "সাইন ইন করার আগে মেইল কনফার্ম করুন। মেইল ইনবক্স অথবা স্প্যাম ইনবক্স চেক করুন।");
         if (!passwords.matches(request.password(), user.getPasswordHash())) throw new ApiException(HttpStatus.UNAUTHORIZED, "Invalid email or password.");
         return response(user);
     }

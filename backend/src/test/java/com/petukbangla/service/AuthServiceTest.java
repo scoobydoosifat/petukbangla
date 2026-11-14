@@ -33,7 +33,7 @@ class AuthServiceTest {
 
         RegistrationResponse response = service.register(new RegisterRequest("Rafi", "FOODIE@EXAMPLE.COM", "Password1"));
 
-        assertTrue(response.message().contains("Check your email"));
+        assertTrue(response.message().contains("ইমেইল") && response.message().contains("স্প্যাম"));
         verify(users).save(argThat(user -> user.getRole() == Role.USER && user.getPasswordHash().equals("hash") && !user.getEmailVerified()));
         verify(email).sendVerification("foodie@example.com", "Rafi", "raw-token");
     }
