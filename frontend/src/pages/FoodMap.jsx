@@ -16,6 +16,7 @@ export default function FoodMap() {
   const [division, setDivision] = useState('All');
   const [downloading, setDownloading] = useState(false);
   const [sharing, setSharing] = useState(false);
+  const [sharePreparing, setSharePreparing] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [notice, setNotice] = useState('');
   const [shareLink, setShareLink] = useState('');
@@ -83,8 +84,15 @@ export default function FoodMap() {
 
   const openShareMenu = () => {
     if (downloading || sharing) return;
-    setShareOpen((open) => !open);
+    const nextOpen = !shareOpen;
+    setShareOpen(nextOpen);
     setNotice('');
+    if (nextOpen && !shareCanvasRef.current) {
+      setSharePreparing(true);
+      prepareShareCard(false)
+        .catch(() => setNotice('Food Map PNG তৈরি করা যায়নি। আবার চেষ্টা করুন।'))
+        .finally(() => setSharePreparing(false));
+    }
   };
 
   const download = async () => {
@@ -96,26 +104,31 @@ export default function FoodMap() {
   };
 
   const share = async (target) => {
+    if (sharePreparing || !shareCanvasRef.current) return;
     setShareOpen(false); setSharing(true); setNotice(''); setShareLink('');
     const sharePageUrl = import.meta.env.VITE_PUBLIC_URL || window.location.href;
     const destination = target === 'facebook'
       ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(sharePageUrl)}`
       : 'https://www.instagram.com/';
-    // Open the real destination during the click event. Delayed navigation from
-    // an about:blank tab is commonly blocked by Chrome's popup protection.
-    const externalWindow = target !== 'native' && !navigator.share
-      ? window.open('', '_blank')
-      : null;
     try {
-      // Always download the constant-size PNG before opening an external feed.
-      const canvas = await prepareShareCard(true);
+      // The card was pre-rendered while the menu was open. Download it and
+      // open the external destination in this same click event—no blank tab.
+      const canvas = shareCanvasRef.current;
+      if (target !== 'native' && !navigator.share) {
+        downloadCanvas(canvas);
+        const externalWindow = window.open(destination, '_blank', 'noopener,noreferrer');
+        if (!externalWindow) setShareLink(destination);
+        setNotice(target === 'facebook' ? 'কার্ডটি ডাউনলোড হয়েছে। Facebook-এ পোস্ট করুন।' : 'কার্ডটি ডাউনলোড হয়েছে। Instagram-এ পোস্ট করুন।');
+        return;
+      }
       const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) throw new Error('PNG তৈরি করা যায়নি।');
       const file = new File([blob], 'petuk-bangla-food-map.png', { type: 'image/png' });
       if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+        downloadCanvas(canvas);
         await navigator.share({ title: 'আমার Food Map — পেটুক বাংলা', text: 'আমার পেটুক বাংলা Food Map', files: [file] });
       } else {
-        if (externalWindow && !externalWindow.closed) externalWindow.location.href = destination;
+        downloadCanvas(canvas);
         setShareLink(destination);
         setNotice(target === 'facebook' ? 'কার্ডটি ডাউনলোড হয়েছে। Facebook-এ পোস্ট করার জন্য ডাউনলোড করা ছবিটি বেছে নিন।' : 'কার্ডটি ডাউনলোড হয়েছে। Instagram খুলে পোস্টে ছবিটি বেছে নিন।');
       }
@@ -145,7 +158,7 @@ export default function FoodMap() {
           {geojson ? <FoodMapGraphic geojson={geojson} foods={foods} selectedIds={selected} onDistrictClick={toggle} /> : <div className="map-skeleton"><span /></div>}
           <div className="export-foot"><span>petukbangla</span><p>বাংলাদেশের ঐতিহ্যবাহী খাবারের স্মৃতি</p><time>{new Intl.DateTimeFormat('bn-BD', { dateStyle: 'medium' }).format(new Date())}</time></div>
         </div>
-        <div className="map-actions"><LoadingButton loading={downloading} disabled={sharing} className="button button-red" onClick={download}><Download size={18} /> PNG ডাউনলোড</LoadingButton><div className="share-wrap"><LoadingButton loading={sharing} disabled={downloading} className="button button-share" onClick={openShareMenu} aria-expanded={shareOpen}><Share2 size={18} /> Share</LoadingButton>{shareOpen && <div className="share-menu" role="menu"><button type="button" onClick={() => share('native')}><Share2 size={16} /> ফোনের Share menu</button><button type="button" onClick={() => share('facebook')}><span className="facebook-mark">f</span> Facebook</button><button type="button" onClick={() => share('instagram')}><Instagram size={16} /> Instagram</button></div>}</div><button className="button button-light" disabled={!selected.length || downloading || sharing} onClick={() => { shareCanvasRef.current = null; shareCanvasPromiseRef.current = null; setSelected([]); }}><RotateCcw size={17} /> মুছে ফেলুন</button></div>
+        <div className="map-actions"><LoadingButton loading={downloading} disabled={sharing || sharePreparing} className="button button-red" onClick={download}><Download size={18} /> PNG ডাউনলোড</LoadingButton><div className="share-wrap"><LoadingButton loading={sharing} disabled={downloading || sharePreparing} className="button button-share" onClick={openShareMenu} aria-expanded={shareOpen}><Share2 size={18} /> Share</LoadingButton>{shareOpen && <div className="share-menu" role="menu"><button type="button" disabled={sharePreparing} onClick={() => share('native')}><Share2 size={16} /> {sharePreparing ? 'কার্ড প্রস্তুত হচ্ছে…' : 'ফোনের Share menu'}</button><button type="button" disabled={sharePreparing} onClick={() => share('facebook')}><span className="facebook-mark">f</span> Facebook</button><button type="button" disabled={sharePreparing} onClick={() => share('instagram')}><Instagram size={16} /> Instagram</button></div>}</div><button className="button button-light" disabled={!selected.length || downloading || sharing || sharePreparing} onClick={() => { shareCanvasRef.current = null; shareCanvasPromiseRef.current = null; setSelected([]); }}><RotateCcw size={17} /> মুছে ফেলুন</button></div>
       </section>
     </div>
   </div>;
