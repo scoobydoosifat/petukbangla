@@ -82,15 +82,13 @@ export default function FoodMap() {
   };
 
   const openShareMenu = () => {
+    if (downloading || sharing) return;
     setShareOpen((open) => !open);
-    if (!shareOpen) {
-      setDownloading(true);
-      setNotice('');
-      prepareShareCard(true).catch(() => setNotice('Food Map PNG তৈরি করা যায়নি। আবার চেষ্টা করুন।')).finally(() => setDownloading(false));
-    }
+    setNotice('');
   };
 
   const download = async () => {
+    if (downloading || sharing) return;
     setDownloading(true); setNotice(''); setShareLink('');
     try { downloadCanvas(await renderMapCanvas()); }
     catch { setNotice('Food Map PNG তৈরি করা যায়নি। আবার চেষ্টা করুন।'); }
@@ -106,19 +104,18 @@ export default function FoodMap() {
     // Open the real destination during the click event. Delayed navigation from
     // an about:blank tab is commonly blocked by Chrome's popup protection.
     const externalWindow = target !== 'native' && !navigator.share
-      ? window.open(destination, '_blank', 'noopener,noreferrer')
+      ? window.open('', '_blank')
       : null;
     try {
-      // The Share button prepares and downloads the card first. Reuse that
-      // canvas so external navigation never delays the download.
-      const canvas = await prepareShareCard(false);
+      // Always download the constant-size PNG before opening an external feed.
+      const canvas = await prepareShareCard(true);
       const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) throw new Error('PNG তৈরি করা যায়নি।');
       const file = new File([blob], 'petuk-bangla-food-map.png', { type: 'image/png' });
       if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
         await navigator.share({ title: 'আমার Food Map — পেটুক বাংলা', text: 'আমার পেটুক বাংলা Food Map', files: [file] });
       } else {
-        if (!shareCanvasRef.current) downloadCanvas(canvas);
+        if (externalWindow && !externalWindow.closed) externalWindow.location.href = destination;
         setShareLink(destination);
         setNotice(target === 'facebook' ? 'কার্ডটি ডাউনলোড হয়েছে। Facebook-এ পোস্ট করার জন্য ডাউনলোড করা ছবিটি বেছে নিন।' : 'কার্ডটি ডাউনলোড হয়েছে। Instagram খুলে পোস্টে ছবিটি বেছে নিন।');
       }
@@ -148,7 +145,7 @@ export default function FoodMap() {
           {geojson ? <FoodMapGraphic geojson={geojson} foods={foods} selectedIds={selected} onDistrictClick={toggle} /> : <div className="map-skeleton"><span /></div>}
           <div className="export-foot"><span>petukbangla</span><p>বাংলাদেশের ঐতিহ্যবাহী খাবারের স্মৃতি</p><time>{new Intl.DateTimeFormat('bn-BD', { dateStyle: 'medium' }).format(new Date())}</time></div>
         </div>
-        <div className="map-actions"><LoadingButton loading={downloading} className="button button-red" onClick={download}><Download size={18} /> PNG ডাউনলোড</LoadingButton><div className="share-wrap"><LoadingButton loading={sharing || downloading} className="button button-share" onClick={openShareMenu} aria-expanded={shareOpen}><Share2 size={18} /> Share</LoadingButton>{shareOpen && <div className="share-menu" role="menu"><button type="button" onClick={() => share('native')}><Share2 size={16} /> ফোনের Share menu</button><button type="button" onClick={() => share('facebook')}><span className="facebook-mark">f</span> Facebook</button><button type="button" onClick={() => share('instagram')}><Instagram size={16} /> Instagram</button></div>}</div><button className="button button-light" disabled={!selected.length} onClick={() => { shareCanvasRef.current = null; shareCanvasPromiseRef.current = null; setSelected([]); }}><RotateCcw size={17} /> মুছে ফেলুন</button></div>
+        <div className="map-actions"><LoadingButton loading={downloading || sharing} className="button button-red" onClick={download}><Download size={18} /> PNG ডাউনলোড</LoadingButton><div className="share-wrap"><LoadingButton loading={sharing || downloading} className="button button-share" onClick={openShareMenu} aria-expanded={shareOpen}><Share2 size={18} /> Share</LoadingButton>{shareOpen && <div className="share-menu" role="menu"><button type="button" onClick={() => share('native')}><Share2 size={16} /> ফোনের Share menu</button><button type="button" onClick={() => share('facebook')}><span className="facebook-mark">f</span> Facebook</button><button type="button" onClick={() => share('instagram')}><Instagram size={16} /> Instagram</button></div>}</div><button className="button button-light" disabled={!selected.length || downloading || sharing} onClick={() => { shareCanvasRef.current = null; shareCanvasPromiseRef.current = null; setSelected([]); }}><RotateCcw size={17} /> মুছে ফেলুন</button></div>
       </section>
     </div>
   </div>;
