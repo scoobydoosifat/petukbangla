@@ -58,7 +58,22 @@ export default function FoodMap() {
 
   const downloadCanvas = (canvas) => {
       const dataUrl = canvas.toDataURL('image/png');
-      const link = document.createElement('a'); link.download = 'petuk-bangla-food-map.png'; link.href = dataUrl; link.click();
+      const link = document.createElement('a'); link.download = 'petuk-bangla-food-map.png'; link.href = dataUrl; link.rel = 'noopener'; link.click();
+  };
+
+  const downloadCanvasForUser = async (canvas) => {
+      const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+      if (!blob) throw new Error('PNG তৈরি করা যায়নি।');
+      const file = new File([blob], 'petuk-bangla-food-map.png', { type: 'image/png' });
+      const inAppBrowser = /FBAN|FBAV|Messenger|Instagram/i.test(navigator.userAgent);
+      if (inAppBrowser && navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+        await navigator.share({ title: 'আমার Food Map — পেটুক বাংলা', files: [file] });
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'petuk-bangla-food-map.png'; link.href = url; link.target = '_blank'; link.rel = 'noopener'; link.click();
+      window.setTimeout(() => URL.revokeObjectURL(url), 60000);
   };
 
   const prepareShareCard = (downloadImage = false) => {
@@ -98,7 +113,7 @@ export default function FoodMap() {
   const download = async () => {
     if (downloading || sharing) return;
     setDownloading(true); setNotice(''); setShareLink('');
-    try { downloadCanvas(await renderMapCanvas()); }
+    try { await downloadCanvasForUser(await renderMapCanvas()); }
     catch { setNotice('Food Map PNG তৈরি করা যায়নি। আবার চেষ্টা করুন।'); }
     finally { setDownloading(false); }
   };
