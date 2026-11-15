@@ -84,3 +84,9 @@ body{font-weight:500}.hero-lead,.page-intro>p:last-child,.explore-head>div>p:las
 @media(max-width:560px){.share-fallback-link{margin:8px 0 0;width:max-content}}
 .map-actions>.button,.map-actions>.share-wrap{flex:1 1 0;min-width:0}.map-actions>.share-wrap{display:flex}.map-actions>.share-wrap>.button{width:100%}
 @media(max-width:760px){.map-actions>.button,.map-actions>.share-wrap{flex:0 0 auto;width:100%}}
+
+/* Social-feed export: Facebook and Instagram portrait ratio, with a fixed 1080x1350 PNG render. */
+.export-card{aspect-ratio:4 / 5;box-sizing:border-box;display:flex;flex-direction:column}
+.export-title{flex:0 0 auto}
+.food-map-svg{flex:1 1 auto;min-height:0;max-height:none;height:auto;width:100%}
+.export-foot{flex:0 0 auto}

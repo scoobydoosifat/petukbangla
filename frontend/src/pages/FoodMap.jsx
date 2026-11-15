@@ -22,6 +22,8 @@ export default function FoodMap() {
   const exportRef = useRef(null);
   const shareCanvasRef = useRef(null);
   const shareCanvasPromiseRef = useRef(null);
+  const SOCIAL_CARD_WIDTH = 1080;
+  const SOCIAL_CARD_HEIGHT = 1350;
 
   useEffect(() => { api.foods().then(setFoods).catch(() => setNotice('অফলাইন তালিকা দেখানো হচ্ছে—আপনার নির্বাচন ঠিকই সংরক্ষিত হবে।')); }, []);
   useEffect(() => { fetch('/data/bangladesh-districts.geojson').then((response) => response.json()).then(setGeojson).catch(() => setNotice('মানচিত্রের রেখা লোড করা যায়নি।')); }, []);
@@ -38,7 +40,13 @@ export default function FoodMap() {
 
   const renderMapCanvas = async () => {
       const backgroundColor = getComputedStyle(exportRef.current).backgroundColor || '#073d2c';
-      const rendered = await toCanvas(exportRef.current, { cacheBust: true, pixelRatio: 2, backgroundColor });
+      const rendered = await toCanvas(exportRef.current, {
+        cacheBust: true,
+        canvasWidth: SOCIAL_CARD_WIDTH,
+        canvasHeight: SOCIAL_CARD_HEIGHT,
+        pixelRatio: 1,
+        backgroundColor,
+      });
       const opaque = document.createElement('canvas');
       opaque.width = rendered.width; opaque.height = rendered.height;
       const context = opaque.getContext('2d');
@@ -125,7 +133,7 @@ export default function FoodMap() {
     {notice && <div className="notice section-wrap"><span>{notice}</span>{shareLink && <a className="share-fallback-link" href={shareLink} target="_blank" rel="noreferrer">{shareLink.includes('facebook') ? 'Facebook খুলুন' : 'Instagram খুলুন'} ↗</a>}</div>}
     <div className="map-workspace section-wrap">
       <aside className="food-picker">
-        <div className="progress-head"><div><small>আপনার স্বাদযাত্রা</small><strong>{selected.length} / {foods.length}</strong></div><span>{triedPercent}% চেষ্টা করেছেন</span></div>
+        <div className="progress-head"><div><small>আপনার স্বাদযাত্রা</small><strong>{selected.length} / {foods.length}</strong></div><span>{triedPercent}% ট্রাই করেছেন</span></div>
         <div className="progress-track"><i style={{ width: `${triedPercent}%` }} /></div>
         <label className="search-box"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="খাবার বা জেলা খুঁজুন" /></label>
         <div className="division-tabs">{divisions.map((item) => <button key={item} className={division === item ? 'active' : ''} onClick={() => setDivision(item)}>{item === 'All' ? 'সব' : item}</button>)}</div>
@@ -136,7 +144,7 @@ export default function FoodMap() {
       </aside>
       <section className="map-stage">
         <div ref={exportRef} className="export-card">
-          <div className="export-title"><div><small>পেটুক বাংলার স্বাদযাত্রা</small><h2>আমার Food Map</h2><p>{selected.length}টি খাবার চেষ্টা করেছি</p></div><span className="export-score"><b>{triedPercent}%</b> চেষ্টা</span></div>
+          <div className="export-title"><div><small>পেটুক বাংলার স্বাদযাত্রা</small><h2>আমার Food Map</h2><p>{selected.length}টি খাবার ট্রাই করেছি</p></div><span className="export-score"><b>{triedPercent}%</b> ট্রাই</span></div>
           {geojson ? <FoodMapGraphic geojson={geojson} foods={foods} selectedIds={selected} onDistrictClick={toggle} /> : <div className="map-skeleton"><span /></div>}
           <div className="export-foot"><span>petukbangla</span><p>বাংলাদেশের ঐতিহ্যবাহী খাবারের স্মৃতি</p><time>{new Intl.DateTimeFormat('bn-BD', { dateStyle: 'medium' }).format(new Date())}</time></div>
         </div>
