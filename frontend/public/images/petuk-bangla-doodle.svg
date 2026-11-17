@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Petuk Bangla cultural map doodle</title>
+  <desc id="desc">A hand-drawn illustration of a Bangladesh-inspired map, location pins, an alpona flower and a steaming bowl.</desc>
+  <rect width="1200" height="900" fill="#0b513b"/>
+  <path d="M0 690c180-80 280 55 455-22s310-84 470-12 180 15 275-30v274H0Z" fill="#073d2c"/>
+  <g fill="none" stroke="#f2c847" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M93 155c175-95 310-40 432 51 125 93 236 111 386 55 91-34 164-25 238 27" stroke-width="7" opacity=".75"/>
+    <path d="M112 202c139-53 253-20 357 66 120 99 263 153 421 93 98-37 172-35 247 5" stroke-width="3" opacity=".55"/>
+    <path d="M205 600c91-145 191-236 306-294 108-55 211-62 315-18 110 46 198 34 281-20" stroke-width="9" stroke-dasharray="14 18" opacity=".95"/>
+    <path d="M811 154c38-44 63-46 86-17 21 28 4 61-32 78-34 17-71-11-54-61Z" stroke-width="6"/>
+    <path d="M851 213v101" stroke-width="6"/>
+    <circle cx="851" cy="153" r="13" stroke-width="5"/>
+  </g>
+  <g transform="translate(170 185)" fill="none" stroke="#fff8e8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="0" cy="0" r="86" stroke-width="4" opacity=".8"/>
+    <path d="M0-67c13 29 36 42 67 46-27 12-42 36-46 67-12-27-36-42-67-46 27-12 42-36 46-67Z" stroke-width="5"/>
+    <path d="M0-32c7 15 17 25 32 32-15 7-25 17-32 32-7-15-17-25-32-32 15-7 25-17 32-32Z" stroke-width="3"/>
+  </g>
+  <g transform="translate(715 560)" fill="none" stroke="#fff8e8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-142 0c13 77 52 116 142 116S129 77 142 0" stroke-width="8"/>
+    <path d="M-155 0c68 34 242 34 310 0" stroke-width="8"/>
+    <path d="M-96 12c20 22 36 32 96 32s76-10 96-32" stroke="#f2c847" stroke-width="5"/>
+    <path d="M-41-32c-8-31 28-34 20-68M7-33c-9-32 28-39 14-78M54-31c-6-27 24-36 15-64" stroke-width="6"/>
+    <path d="M-96 119h192" stroke-width="8"/>
+  </g>
+  <g fill="#e93b32" stroke="#fff8e8" stroke-width="4">
+    <circle cx="302" cy="496" r="13"/><circle cx="451" cy="381" r="13"/><circle cx="1016" cy="405" r="13"/>
+  </g>
+  <g fill="#f2c847" font-family="Anek Bangla, sans-serif" font-size="38" font-weight="700">
+    <text x="78" y="785">স্বাদ</text><text x="1010" y="760">গল্প</text>
+  </g>
+  <g fill="#fff8e8" font-family="Anek Bangla, sans-serif" font-size="52" font-weight="700" opacity=".96">
+    <text x="78" y="112">পেটুক বাংলা</text>
+  </g>
+</svg>
