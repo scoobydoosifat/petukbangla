@@ -5,7 +5,7 @@
   <path d="M0 724c180-82 326-2 492-36 170-35 288-90 452-34 103 35 177 25 256-18v264H0Z" fill="#e8d7b7"/>
   <path d="M0 755c176-68 312 8 481-23 176-32 302-92 462-35 102 36 175 26 257-10" fill="none" stroke="#0d5b42" stroke-width="5" opacity=".38"/>
   <g transform="translate(600 92)">
-    <path d="M-264 0c25-43 72-57 123-47 46-29 106-25 141 8 48-16 100 5 118 45-20 42-74 60-119 45-39 31-98 31-139 1-52 13-101-10-124-52Z" fill="#0d5b42" stroke="#e93b32" stroke-width="7"/>
+    <rect x="-270" y="-54" width="540" height="108" rx="54" fill="#0d5b42" stroke="#e93b32" stroke-width="7"/>
     <path d="M-204 0c22-17 42-26 63-28M204 0c-22-17-42-26-63-28" fill="none" stroke="#f2c847" stroke-width="5" stroke-linecap="round"/>
     <text x="0" y="18" text-anchor="middle" fill="#fff8e8" font-family="Anek Bangla, sans-serif" font-size="66" font-weight="700">পেটুক বাংলা</text>
     <path d="M-130 40c78 18 182 18 260 0" fill="none" stroke="#f2c847" stroke-width="4" stroke-linecap="round"/>
