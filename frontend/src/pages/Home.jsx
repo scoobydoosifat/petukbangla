@@ -35,6 +35,6 @@ export default function Home() {
       </div>
     </section>
 
-    <section className="story-strip"><div className="story-photo"><span>ভর্তা · ভাত · ভ্রমণ</span></div><div><p className="eyebrow">খাবার শুধু রেসিপি নয়</p><h2>একেকটি স্বাদ,<br />একেকটি জায়গার গল্প।</h2><p>পেটুক বাংলা কোনো রেস্টুরেন্ট র‍্যাঙ্কিং নয়। এটি ব্যক্তিগত খাবার-স্মৃতি আর কমিউনিটির আবিষ্কারের একটি জীবন্ত নকশা।</p><Link to="/food-map">আপনার গল্প আঁকুন <Download size={18} /></Link></div></section>
+    <section className="story-strip"><div className="story-photo"><span>ইলিশ · পিঠা · পথের স্বাদ</span></div><div><p className="eyebrow">খাবার শুধু রেসিপি নয়</p><h2>একেকটি স্বাদ,<br />একেকটি জায়গার গল্প।</h2><p>পেটুক বাংলা কোনো রেস্টুরেন্ট র‍্যাঙ্কিং নয়। এটি ব্যক্তিগত খাবার-স্মৃতি আর কমিউনিটির আবিষ্কারের একটি জীবন্ত নকশা।</p><Link to="/food-map">আপনার গল্প আঁকুন <Download size={18} /></Link></div></section>
   </>;
 }
