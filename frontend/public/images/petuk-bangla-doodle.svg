@@ -1,35 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
-  <title id="title">Petuk Bangla cultural map doodle</title>
-  <desc id="desc">A hand-drawn illustration of a Bangladesh-inspired map, location pins, an alpona flower and a steaming bowl.</desc>
-  <rect width="1200" height="900" fill="#0b513b"/>
-  <path d="M0 690c180-80 280 55 455-22s310-84 470-12 180 15 275-30v274H0Z" fill="#073d2c"/>
-  <g fill="none" stroke="#f2c847" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M93 155c175-95 310-40 432 51 125 93 236 111 386 55 91-34 164-25 238 27" stroke-width="7" opacity=".75"/>
-    <path d="M112 202c139-53 253-20 357 66 120 99 263 153 421 93 98-37 172-35 247 5" stroke-width="3" opacity=".55"/>
-    <path d="M205 600c91-145 191-236 306-294 108-55 211-62 315-18 110 46 198 34 281-20" stroke-width="9" stroke-dasharray="14 18" opacity=".95"/>
-    <path d="M811 154c38-44 63-46 86-17 21 28 4 61-32 78-34 17-71-11-54-61Z" stroke-width="6"/>
-    <path d="M851 213v101" stroke-width="6"/>
-    <circle cx="851" cy="153" r="13" stroke-width="5"/>
+  <title id="title">পেটুক বাংলা — খাবারের গল্পের মানচিত্র</title>
+  <desc id="desc">A hand-drawn cultural map composition with Bengali lettering, routes, location pins, an alpona rosette, a rickshaw wheel and a tea cup.</desc>
+  <rect width="1200" height="900" fill="#f7eddb"/>
+  <path d="M0 724c180-82 326-2 492-36 170-35 288-90 452-34 103 35 177 25 256-18v264H0Z" fill="#e8d7b7"/>
+  <path d="M0 755c176-68 312 8 481-23 176-32 302-92 462-35 102 36 175 26 257-10" fill="none" stroke="#0d5b42" stroke-width="5" opacity=".38"/>
+  <g transform="translate(600 92)">
+    <path d="M-264 0c25-43 72-57 123-47 46-29 106-25 141 8 48-16 100 5 118 45-20 42-74 60-119 45-39 31-98 31-139 1-52 13-101-10-124-52Z" fill="#0d5b42" stroke="#e93b32" stroke-width="7"/>
+    <path d="M-204 0c22-17 42-26 63-28M204 0c-22-17-42-26-63-28" fill="none" stroke="#f2c847" stroke-width="5" stroke-linecap="round"/>
+    <text x="0" y="18" text-anchor="middle" fill="#fff8e8" font-family="Anek Bangla, sans-serif" font-size="66" font-weight="700">পেটুক বাংলা</text>
+    <path d="M-130 40c78 18 182 18 260 0" fill="none" stroke="#f2c847" stroke-width="4" stroke-linecap="round"/>
   </g>
-  <g transform="translate(170 185)" fill="none" stroke="#fff8e8" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="0" cy="0" r="86" stroke-width="4" opacity=".8"/>
-    <path d="M0-67c13 29 36 42 67 46-27 12-42 36-46 67-12-27-36-42-67-46 27-12 42-36 46-67Z" stroke-width="5"/>
-    <path d="M0-32c7 15 17 25 32 32-15 7-25 17-32 32-7-15-17-25-32-32 15-7 25-17 32-32Z" stroke-width="3"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M245 434c104-108 186-133 285-79 103 56 157 86 251 24 89-59 169-72 267-10" stroke="#0d5b42" stroke-width="13" opacity=".14"/>
+    <path d="M245 434c104-108 186-133 285-79 103 56 157 86 251 24 89-59 169-72 267-10" stroke="#e93b32" stroke-width="6" stroke-dasharray="2 19"/>
+    <path d="M258 514c113-65 205-69 305-7 88 55 168 52 255-9 88-62 164-70 267-11" stroke="#0d5b42" stroke-width="4" opacity=".6"/>
   </g>
-  <g transform="translate(715 560)" fill="none" stroke="#fff8e8" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M-142 0c13 77 52 116 142 116S129 77 142 0" stroke-width="8"/>
-    <path d="M-155 0c68 34 242 34 310 0" stroke-width="8"/>
-    <path d="M-96 12c20 22 36 32 96 32s76-10 96-32" stroke="#f2c847" stroke-width="5"/>
-    <path d="M-41-32c-8-31 28-34 20-68M7-33c-9-32 28-39 14-78M54-31c-6-27 24-36 15-64" stroke-width="6"/>
-    <path d="M-96 119h192" stroke-width="8"/>
+  <g fill="#e93b32" stroke="#fff8e8" stroke-width="7">
+    <path d="M254 404c0-36 28-63 63-63s63 27 63 63c0 45-63 108-63 108s-63-63-63-108Z"/>
+    <circle cx="317" cy="402" r="17" fill="#fff8e8" stroke="none"/>
+    <path d="M847 350c0-36 28-63 63-63s63 27 63 63c0 45-63 108-63 108s-63-63-63-108Z"/>
+    <circle cx="910" cy="348" r="17" fill="#fff8e8" stroke="none"/>
   </g>
-  <g fill="#e93b32" stroke="#fff8e8" stroke-width="4">
-    <circle cx="302" cy="496" r="13"/><circle cx="451" cy="381" r="13"/><circle cx="1016" cy="405" r="13"/>
+  <g transform="translate(154 260)" fill="none" stroke="#0d5b42" stroke-linecap="round" stroke-linejoin="round">
+    <circle r="80" stroke-width="4" opacity=".7"/>
+    <path d="M0-68c19 23 28 42 25 68 26-3 45 6 68 25-23 19-42 28-68 25 3 26-6 45-25 68-19-23-28-42-25-68-26 3-45-6-68-25 23-19 42-28 68-25-3-26 6-45 25-68Z" stroke-width="5"/>
+    <circle r="18" stroke="#e93b32" stroke-width="5"/>
+    <path d="M-111 0h-34M111 0h34M0-111v-34M0 111v34" stroke="#f2c847" stroke-width="5"/>
   </g>
-  <g fill="#f2c847" font-family="Anek Bangla, sans-serif" font-size="38" font-weight="700">
-    <text x="78" y="785">স্বাদ</text><text x="1010" y="760">গল্প</text>
+  <g transform="translate(1033 628)" fill="none" stroke="#e93b32" stroke-linecap="round" stroke-linejoin="round">
+    <circle r="83" stroke-width="7"/><circle r="13" stroke-width="5"/>
+    <path d="M0-13 0-83M13 0 83 0M0 13 0 83M-13 0-83 0M9-9 59-59M9 9 59 59M-9 9-59 59M-9-9-59-59" stroke-width="4"/>
+    <path d="M-110 95c50 20 126 20 166-8" stroke="#0d5b42" stroke-width="5"/>
   </g>
-  <g fill="#fff8e8" font-family="Anek Bangla, sans-serif" font-size="52" font-weight="700" opacity=".96">
-    <text x="78" y="112">পেটুক বাংলা</text>
+  <g transform="translate(170 665)" fill="none" stroke="#0d5b42" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-70-10h128c-8 74-28 103-64 103s-56-29-64-103Z" fill="#fff8e8" stroke-width="6"/>
+    <path d="M58 10c55-8 65 53 7 61" stroke-width="7"/>
+    <path d="M-29-43c-14-32 27-36 9-74M9-43c-10-32 31-41 15-77M45-42c-7-26 26-36 16-62" stroke="#e93b32" stroke-width="6"/>
+    <path d="M-93 100h174" stroke="#f2c847" stroke-width="7"/>
   </g>
+  <g fill="#f2c847"><circle cx="404" cy="207" r="7"/><circle cx="445" cy="180" r="4"/><circle cx="785" cy="196" r="6"/><circle cx="827" cy="224" r="4"/></g>
+  <g fill="#0d5b42" font-family="Anek Bangla, sans-serif" font-size="27" font-weight="600">
+    <text x="420" y="678" transform="rotate(-8 420 678)">খাবারের গল্প</text>
+    <text x="715" y="720" transform="rotate(7 715 720)">পথে পথে স্বাদ</text>
+  </g>
+  <g fill="#e93b32" font-family="DM Sans, sans-serif" font-size="17" font-weight="700" letter-spacing="4"><text x="600" y="830" text-anchor="middle">MAP · DISCOVER · SHARE</text></g>
 </svg>
