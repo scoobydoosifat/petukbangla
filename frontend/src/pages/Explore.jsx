@@ -13,6 +13,7 @@ const DHAKA = [23.8103, 90.4125];
 const emptyForm = { foodName: '', placeName: '', description: '', address: '', latitude: '', longitude: '', imageDataUrl: '' };
 const pinIcon = new DivIcon({ className: 'food-map-pin', html: '<span>🍽</span>', iconSize: [42, 50], iconAnchor: [21, 48], popupAnchor: [0, -44] });
 const locationIcon = new DivIcon({ className: 'current-location-pin', html: '<span><i></i></span>', iconSize: [34, 34], iconAnchor: [17, 17] });
+const searchedLocationIcon = new DivIcon({ className: 'searched-location-pin', html: '<span><i></i></span>', iconSize: [38, 48], iconAnchor: [19, 47], popupAnchor: [0, -43] });
 
 function ClickPicker({ onPick }) {
   useMapEvents({ click: (event) => onPick(event.latlng) });
@@ -148,7 +149,7 @@ export default function Explore() {
           <MapFocus point={locatedPoint} />
           <SearchResultMarker point={searchedPoint} />
           {locatedPoint && <Marker position={[locatedPoint.lat, locatedPoint.lng]} icon={locationIcon} interactive={false} />}
-          {searchedPoint && <Marker position={[searchedPoint.lat, searchedPoint.lng]}><Popup><strong>{searchedPoint.label}</strong><br /><small>এখানে খাবারের পিন যোগ করতে মানচিত্রে ক্লিক করুন।</small></Popup></Marker>}
+          {searchedPoint && <Marker position={[searchedPoint.lat, searchedPoint.lng]} icon={searchedLocationIcon}><Popup><strong>{searchedPoint.label}</strong><br /><small>এখানে খাবারের পিন যোগ করতে মানচিত্রে ক্লিক করুন।</small></Popup></Marker>}
           {markers.map((place) => <Marker key={place.id} position={[place.latitude, place.longitude]} icon={pinIcon}><Popup maxWidth={285}><article className="pin-popup">{place.imageDataUrl && <img src={place.imageDataUrl} alt={place.foodName} />}<small>{place.placeName}</small><h3>{place.foodName}</h3><p>{place.description}</p><span><MapPin size={13} /> {place.address}</span><footer>পিন করেছেন {place.userName}{place.ownedByCurrentUser && <button onClick={() => remove(place)} aria-label="Delete pin"><Trash2 size={15} /></button>}</footer></article></Popup></Marker>)}
         </MapContainer>
         {loading && <div className="map-loading"><span className="logo-mark small"><i /></span> খাবারের পিন খুঁজছি…</div>}

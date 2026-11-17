@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { searchLocations } from './locationSearch';
+import { locationQueryVariants, searchLocations } from './locationSearch';
 
 describe('location search', () => {
   afterEach(() => vi.restoreAllMocks());
@@ -28,5 +28,18 @@ describe('location search', () => {
 
     fetchSpy.mockResolvedValue({ ok: false, json: async () => [] });
     await expect(searchLocations('ঢাকা')).rejects.toThrow('জায়গাটি খুঁজে পাওয়া যায়নি');
+  });
+
+  it('tries a known transliteration variant when the map index uses another spelling', async () => {
+    expect(locationQueryVariants('Fazley Rabbi Park')).toContain('Fazle Rabbi Park');
+    vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce({ ok: true, json: async () => [] })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => [{ place_id: 2, lat: '23.7736', lon: '90.4151', display_name: 'Shahid Dr Fazle Rabbi Park, Dhaka', type: 'park' }],
+      });
+
+    await expect(searchLocations('Fazley Rabbi Park')).resolves.toEqual([expect.objectContaining({ lat: 23.7736, lng: 90.4151 })]);
+    expect(fetch).toHaveBeenCalledTimes(2);
   });
 });
