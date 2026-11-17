@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { CirclePlus, Crosshair, MapPin, RefreshCw, Trash2, X } from 'lucide-react';
+import { CirclePlus, Crosshair, MapPin, RefreshCw, Search, Trash2, X } from 'lucide-react';
 import { DivIcon } from 'leaflet';
 import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import { api } from '../api';
@@ -7,6 +7,7 @@ import LoadingButton from '../components/LoadingButton';
 import ConfirmDialog from '../components/ConfirmDialog';
 import { compressImage } from '../utils/image';
 import { getAccuratePosition } from '../utils/geolocation';
+import { searchLocations } from '../utils/locationSearch';
 
 const DHAKA = [23.8103, 90.4125];
 const emptyForm = { foodName: '', placeName: '', description: '', address: '', latitude: '', longitude: '', imageDataUrl: '' };
@@ -24,6 +25,12 @@ function MapFocus({ point }) {
   return null;
 }
 
+function SearchResultMarker({ point }) {
+  const map = useMap();
+  useEffect(() => { if (point) map.flyTo([point.lat, point.lng], Math.max(map.getZoom(), 16), { duration: 1.1 }); }, [map, point]);
+  return null;
+}
+
 export default function Explore() {
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,6 +45,10 @@ export default function Explore() {
   const [modal, setModal] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [error, setError] = useState('');
+  const [locationQuery, setLocationQuery] = useState('');
+  const [locationResults, setLocationResults] = useState([]);
+  const [searchingLocation, setSearchingLocation] = useState(false);
+  const [searchedPoint, setSearchedPoint] = useState(null);
 
   const load = useCallback(async (quiet = false) => {
     quiet ? setRefreshing(true) : setLoading(true);
@@ -94,6 +105,22 @@ export default function Explore() {
     if (!approximatePoint) return;
     selectPoint(approximatePoint, approximatePoint.accuracy);
   };
+  const searchLocation = async (event) => {
+    event.preventDefault();
+    if (searchingLocation || !locationQuery.trim()) return;
+    setSearchingLocation(true); setLocationResults([]); setError('');
+    try {
+      const results = await searchLocations(locationQuery);
+      if (!results.length) throw new Error('জায়গাটি খুঁজে পাওয়া যায়নি। ইংরেজি বা বাংলা বানান দিয়ে আবার চেষ্টা করুন।');
+      setLocationResults(results);
+      setSearchedPoint(null);
+    } catch (exception) {
+      if (exception.name !== 'AbortError') setError(exception.message);
+    } finally { setSearchingLocation(false); }
+  };
+  const chooseLocation = (point) => {
+    setSearchedPoint(point); setLocationResults([]); setError('');
+  };
   const onPhoto = async (event) => {
     const file = event.target.files?.[0]; if (!file) return;
     try {
@@ -109,11 +136,19 @@ export default function Explore() {
     <section className="explore-layout section-wrap">
       <div className="dhaka-map-wrap">
         <div className="map-hint"><MapPin size={17} /> নতুন খাবার যোগ করতে মানচিত্রে ক্লিক করুন</div>
+        <form className="map-location-search" onSubmit={searchLocation}>
+          <Search size={18} aria-hidden="true" />
+          <input value={locationQuery} onChange={(event) => setLocationQuery(event.target.value)} placeholder="ইংরেজি বা বাংলায় জায়গা খুঁজুন" aria-label="জায়গা খুঁজুন" />
+          <button type="submit" disabled={searchingLocation || !locationQuery.trim()}>{searchingLocation ? 'খুঁজছি…' : 'খুঁজুন'}</button>
+        </form>
+        {!!locationResults.length && <div className="location-results" role="listbox" aria-label="জায়গার ফলাফল">{locationResults.map((result) => <button key={result.id} type="button" onClick={() => chooseLocation(result)}><MapPin size={15} /><span>{result.label}</span></button>)}</div>}
         <MapContainer center={DHAKA} zoom={13} minZoom={10} maxZoom={20} className="dhaka-map" scrollWheelZoom zoomControl preferCanvas>
           <TileLayer maxZoom={20} maxNativeZoom={19} attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <ClickPicker onPick={(point) => selectPoint(point)} />
           <MapFocus point={locatedPoint} />
+          <SearchResultMarker point={searchedPoint} />
           {locatedPoint && <Marker position={[locatedPoint.lat, locatedPoint.lng]} icon={locationIcon} interactive={false} />}
+          {searchedPoint && <Marker position={[searchedPoint.lat, searchedPoint.lng]}><Popup><strong>{searchedPoint.label}</strong><br /><small>এখানে খাবারের পিন যোগ করতে মানচিত্রে ক্লিক করুন।</small></Popup></Marker>}
           {markers.map((place) => <Marker key={place.id} position={[place.latitude, place.longitude]} icon={pinIcon}><Popup maxWidth={285}><article className="pin-popup">{place.imageDataUrl && <img src={place.imageDataUrl} alt={place.foodName} />}<small>{place.placeName}</small><h3>{place.foodName}</h3><p>{place.description}</p><span><MapPin size={13} /> {place.address}</span><footer>পিন করেছেন {place.userName}{place.ownedByCurrentUser && <button onClick={() => remove(place)} aria-label="Delete pin"><Trash2 size={15} /></button>}</footer></article></Popup></Marker>)}
         </MapContainer>
         {loading && <div className="map-loading"><span className="logo-mark small"><i /></span> খাবারের পিন খুঁজছি…</div>}
