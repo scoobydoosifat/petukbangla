@@ -87,6 +87,10 @@ body{font-weight:500}.hero-lead,.page-intro>p:last-child,.explore-head>div>p:las
 .map-actions>.button,.map-actions>.share-wrap{flex:1 1 0;min-width:0}.map-actions>.share-wrap{display:flex}.map-actions>.share-wrap>.button{width:100%}
 @media(max-width:760px){.map-actions>.button,.map-actions>.share-wrap{flex:0 0 auto;width:100%}}
 
+/* Landing-page developer attribution and compact pin author row. */
+.site-footer-copy,.site-footer-meta{display:flex;align-items:center;gap:12px}.site-footer-meta{flex-direction:column;align-items:flex-end;gap:8px}.site-footer-copy p,.site-footer-meta p{margin:0;font-family:'Anek Bangla'}.developer-credit{display:flex;align-items:center;gap:5px}.developer-credit>a{display:inline-flex;align-items:center;gap:5px;color:#fff8e8;font-weight:700}.developer-credit img{width:18px;height:18px;object-fit:contain;border-radius:4px;background:#fff}.developer-credit span{font-family:'DM Sans',sans-serif}.pin-popup footer.pin-author{background:transparent;color:var(--muted);width:auto;margin-top:10px;padding:8px 0 0;border-top:1px solid #ddd;display:flex;justify-content:space-between;align-items:center;font:500 10px/1.25 'Anek Bangla'}.pin-popup footer.pin-author button{border:0;background:#ffe1de;color:var(--red);width:27px;height:27px;border-radius:50%;display:grid;place-items:center}
+@media(max-width:760px){.site-footer-meta{align-items:center}.site-footer-copy,.site-footer-meta{width:100%;justify-content:center;text-align:center}.site-footer-copy{flex-direction:column}.site-footer-copy p,.site-footer-meta p{width:100%;text-align:center}.site-footer .brand{margin-inline:auto}.pin-popup footer.pin-author{width:auto;padding:8px 0 0;margin-top:10px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;text-align:left}.pin-popup footer.pin-author button{width:27px;height:27px}}
+
 /* Social-feed export: Facebook and Instagram portrait ratio, with a fixed 1080x1350 PNG render. */
 .export-card{aspect-ratio:4 / 5;box-sizing:border-box;display:flex;flex-direction:column}
 .export-title{flex:0 0 auto}
